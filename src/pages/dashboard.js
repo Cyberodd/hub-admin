@@ -15,7 +15,7 @@ const drawerItems = [
     {name: 'Farms', icon: <CategoryOutlined/>, path: 'farms'},
     {name: 'Animals', icon: <PetsOutlined/>, path: 'animals'},
     {name: 'Users', icon: <PeopleAltOutlined/>, path: 'users'},
-    {name: 'Sales', icon: <MonetizationOnOutlined/>, path: 'sales'},
+    {name: 'Transactions', icon: <MonetizationOnOutlined/>, path: 'transactions'},
     {name: 'Reports', icon: <AssessmentOutlined/>, path: 'reports'},
 ]
 
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        marginTop: 40
+        marginTop: 50
     },
 }))
 

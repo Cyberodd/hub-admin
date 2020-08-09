@@ -37,7 +37,11 @@
     }
 }
 
-a{
+a {
+    text-decoration: none;
+}
+
+a:hover {
     text-decoration: none;
 }
 
@@ -54,4 +58,27 @@ a{
     left: 10px;
     border-radius: 5px;
     background: #f64f4f;
+}
+
+.home-card-item {
+    width: 290px;
+}
+
+.custom-home svg {
+    font-size: 30px;
+}
+
+.card-common {
+    box-shadow: 1px 2px 5px #999;
+    transition: all .4s
+}
+
+.card-common:hover {
+    box-shadow: 2px 3px 15px #999;
+    transform: translateY(-1px);
+    cursor: pointer
+}
+
+.btn-appearance {
+    width: 80px;
 }

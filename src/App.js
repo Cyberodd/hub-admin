@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import {createMuiTheme, ThemeProvider} from "material-ui-core"
 import Signin from "./pages/signin"
