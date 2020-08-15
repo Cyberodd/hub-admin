@@ -1,6 +1,8 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {makeStyles} from "@material-ui/core/styles"
-import {TextField} from "material-ui-core"
+import {Button, TextField, Typography} from "material-ui-core"
+import {fetchTransactions} from "../api"
+import {connect} from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -14,20 +16,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const transactions = [
-    {type: 'Milk Sale', time: '04 Aug 2020 14:05', cash: '50.00', quantity: 1, transactionId: 'MfVHW9ldttS5BSkB3vNK'},
-    {
-        type: 'Animal Sale',
-        time: '05 Aug 2020 14:05',
-        cash: '100.00',
-        quantity: 2,
-        transactionId: 'ah8rptfusdWQ8R2BoGz4'
-    },
-    {type: 'Milk Sale', time: '06 Aug 2020 14:05', cash: '150.00', quantity: 3, transactionId: 'uibXH4vsMnCvwh2kx1Po'},
-]
+function Transaction({fetchTransactions, transactionData: {transactions, loading, error}}) {
 
+    useEffect(() => {
+        fetchTransactions()
+    }, [fetchTransactions])
 
-function Transaction() {
     let today = new Date()
     const dd = String(today.getDate()).padStart(2, '0')
     const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
@@ -36,7 +30,7 @@ function Transaction() {
     today = yyyy + '-' + mm + '-' + dd
 
     const [selectedDate, setSelectedDate] = useState(today)
-    const [transId, setTransId] = useState('')
+    const [transaction, setTransaction] = useState(null)
     const classes = useStyles()
 
     const handleDateChange = (event) => {
@@ -46,7 +40,7 @@ function Transaction() {
 
     return (
         <div>
-            <div className="col-sm-12 col-md-4 p-2">
+            <div className="col-sm-12 col-md-7 p-2">
                 <TextField id="date" label="Please Select a Day" type="date" value={selectedDate}
                            variant='outlined' size='small' className={classes.textField} InputLabelProps={{
                     shrink: true,
@@ -54,9 +48,9 @@ function Transaction() {
                 />
             </div>
             <div className="row p-2">
-                <div className="col-sm-12 col-md-7">
+                <div className="col-md-7 col-sm-12">
                     <h5>Today's Transactions</h5>
-                    <table className='table bg-light'>
+                    <table className='table bg-light text-center'>
                         <thead>
                         <tr className='text-muted'>
                             <th>Transaction ID</th>
@@ -66,14 +60,14 @@ function Transaction() {
                         </tr>
                         </thead>
                         {transactions.map(transaction => (
-                            <tbody key={transaction.transactionId}>
+                            <tbody key={transaction.transId}>
                             <tr>
-                                <td>{transaction.transactionId}</td>
+                                <td>{transaction.transId}</td>
                                 <td>{transaction.type}</td>
                                 <td>{transaction.quantity}</td>
                                 <td>
                                     <button className='btn btn-sm btn-outline-success btn-appearance'
-                                            onClick={() => setTransId(transaction.transactionId)}>
+                                            onClick={() => setTransaction(transaction)}>
                                         View
                                     </button>
                                 </td>
@@ -82,14 +76,25 @@ function Transaction() {
                         ))}
                     </table>
                 </div>
-                <div className="col-sm-12 col-md-5">
+                <div className="col-md-5 col-sm-12">
                     <h5>Transaction Info</h5>
                     <div className="card">
                         <div className="card-body">
-                            {transId !== '' ? (
-                                <div className='text-center'>
-                                    <p>Fetching info for transaction with id:</p>
-                                    <p>{transId}</p>
+                            {transaction !== null ? (
+                                <div>
+                                    <Typography variant='body2'><b>TransactionID:</b> {transaction.transId}</Typography>
+                                    <br/>
+                                    <Typography variant='body2'><b>Type:</b> {transaction.type}</Typography>
+                                    <br/>
+                                    <Typography variant='body2'><b>Quantity:</b> {transaction.quantity}
+                                        {transaction.type === 'Milk Sale' ? <span>litres</span>: <span>Kgs</span>}
+                                    </Typography>
+                                    <br/>
+                                    <Typography variant='body2'><b>Date:</b> {transaction.time}</Typography>
+                                    <br/>
+                                    <Typography variant='body2'><b>Amount:</b> {transaction.cash}</Typography>
+                                    <br/>
+                                    <Button variant='contained' color='primary' size='small'>View Animal</Button>
                                 </div>
                             ) : (
                                 <p className='text-center'>No Transaction Selected</p>
@@ -102,4 +107,12 @@ function Transaction() {
     )
 }
 
-export default Transaction
+const mapStateToProps = state => ({
+    transactionData: state.transactionData
+})
+
+const mapActionsToProps = dispatch => ({
+    fetchTransactions: () => dispatch(fetchTransactions())
+})
+
+export default connect(mapStateToProps, mapActionsToProps)(Transaction)

@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "date-fns": "^2.15.0",
+    "jwt-decode": "^2.2.0",
     "material-ui-core": "^5.0.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
@@ -44,5 +45,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://us-central1-dairy-c756b.cloudfunctions.net/api"
 }

@@ -1,13 +1,19 @@
 import React, {Fragment, useState} from 'react'
 import {Button, Dialog, DialogActions, DialogContent, ListItem, ListItemIcon, ListItemText} from "material-ui-core"
 import {ExitToAppOutlined} from "@material-ui/icons"
+import {signOutUser} from "../api"
+import {connect} from 'react-redux'
 
-function SignOutDialog() {
+function SignOutDialog({signOut}) {
 
     const [isOpen, setIsOpen] = useState(false)
 
     const handleClose = () => {
         setIsOpen(false)
+    }
+
+    const handleSignOut = () => {
+        signOut()
     }
     return (
         <Fragment>
@@ -23,7 +29,7 @@ function SignOutDialog() {
                     <Button type='submit' variant='contained' color='secondary' size='small' onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button type='submit' variant='contained' color='primary' size='small'>
+                    <Button type='submit' variant='contained' color='primary' size='small' onClick={handleSignOut}>
                         Yes
                     </Button>
                 </DialogActions>
@@ -32,4 +38,10 @@ function SignOutDialog() {
     )
 }
 
-export default SignOutDialog
+const mapStateToProps = state => ({})
+
+const mapActionsToProps = dispatch => ({
+    signOut: () => dispatch(signOutUser())
+})
+
+export default connect(mapStateToProps, mapActionsToProps)(SignOutDialog)

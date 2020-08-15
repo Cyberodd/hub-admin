@@ -5,8 +5,13 @@ import Animal from "../components/Animal"
 import Farm from "../components/Farm"
 import Report from "../components/Report"
 import Transactions from "../components/Transaction"
+import {Redirect} from "react-router-dom"
+import {connect} from 'react-redux'
 
-function Content({match:{params}}) {
+function Content({match:{params}, authenticated}) {
+
+    if (!authenticated) return <Redirect to='/'/>
+
     const renderComponents = (() => {
         switch (params.item){
             case 'dashboard': return <Home/>
@@ -25,4 +30,8 @@ function Content({match:{params}}) {
     )
 }
 
-export default Content
+const mapStateToProps = state => ({
+    authenticated: state.userData.authenticated
+})
+
+export default connect(mapStateToProps)(Content)

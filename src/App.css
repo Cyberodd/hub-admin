@@ -56,8 +56,25 @@ a:hover {
 .drawer-item:hover {
     right: 10px;
     left: 10px;
-    border-radius: 5px;
-    background: #f64f4f;
+    background: #848484;
+}
+
+a.active {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #f64f4f;
+}
+
+.custom-input {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.custom-button{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
 .home-card-item {

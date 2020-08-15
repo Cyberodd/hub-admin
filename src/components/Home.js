@@ -27,6 +27,7 @@ const admins = [
 function Home() {
 
     const classes = useStyles()
+
     return (
         <div>
             <div className="row custom-home">
