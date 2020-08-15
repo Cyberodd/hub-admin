@@ -2,26 +2,26 @@ import * as actions from '../types'
 
 const initialState = {
     loading: false,
-    transactions: [],
+    animals: [],
     errors: {}
 }
 
-const transactionReducer = (state = initialState, action) => {
+const animalReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actions.FETCH_TRANSACTIONS_REQUEST:
+        case actions.FETCH_ANIMALS_REQUEST:
             return {
                 ...state, loading: true
             }
-        case actions.FETCH_TRANSACTIONS_SUCCESS:
+        case actions.FETCH_ANIMALS_SUCCESS:
             return {
                 loading: false,
-                transactions: action.payload,
+                animals: action.payload,
                 errors: {}
             }
-        case actions.FETCH_TRANSACTIONS_ERROR:
+        case actions.FETCH_ANIMALS_ERROR:
             return {
                 loading: false,
-                transactions: [],
+                animals: [],
                 errors: action.payload
             }
         default:
@@ -29,4 +29,4 @@ const transactionReducer = (state = initialState, action) => {
     }
 }
 
-export default transactionReducer
+export default animalReducer

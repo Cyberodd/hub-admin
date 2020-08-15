@@ -60,11 +60,11 @@ function Transaction({fetchTransactions, transactionData: {transactions, loading
                         </tr>
                         </thead>
                         {transactions.map(transaction => (
-                            <tbody key={transaction.transId}>
+                            <tbody key={transaction["transId"]}>
                             <tr>
-                                <td>{transaction.transId}</td>
-                                <td>{transaction.type}</td>
-                                <td>{transaction.quantity}</td>
+                                <td>{transaction["transId"]}</td>
+                                <td>{transaction["type"]}</td>
+                                <td>{transaction["quantity"]}</td>
                                 <td>
                                     <button className='btn btn-sm btn-outline-success btn-appearance'
                                             onClick={() => setTransaction(transaction)}>
@@ -82,17 +82,17 @@ function Transaction({fetchTransactions, transactionData: {transactions, loading
                         <div className="card-body">
                             {transaction !== null ? (
                                 <div>
-                                    <Typography variant='body2'><b>TransactionID:</b> {transaction.transId}</Typography>
+                                    <Typography variant='body2'><b>TransactionID:</b> {transaction["transId"]}</Typography>
                                     <br/>
                                     <Typography variant='body2'><b>Type:</b> {transaction.type}</Typography>
                                     <br/>
-                                    <Typography variant='body2'><b>Quantity:</b> {transaction.quantity}
-                                        {transaction.type === 'Milk Sale' ? <span>litres</span>: <span>Kgs</span>}
+                                    <Typography variant='body2'><b>Quantity:</b> {transaction["quantity"]}
+                                        {transaction["type"] === 'Milk Sale' ? <span>litres</span>: <span>Kgs</span>}
                                     </Typography>
                                     <br/>
-                                    <Typography variant='body2'><b>Date:</b> {transaction.time}</Typography>
+                                    <Typography variant='body2'><b>Date:</b> {transaction["time"]}</Typography>
                                     <br/>
-                                    <Typography variant='body2'><b>Amount:</b> {transaction.cash}</Typography>
+                                    <Typography variant='body2'><b>Amount:</b> {transaction["cash"]}</Typography>
                                     <br/>
                                     <Button variant='contained' color='primary' size='small'>View Animal</Button>
                                 </div>

@@ -7,6 +7,7 @@ import {
     fetchTransactionRequest,
     fetchTransactionSuccess
 } from "../redux/transactions/transactionActions"
+import {fetchAnimalsError, fetchAnimalsRequest, fetchAnimalsSuccess} from "../redux/animals/animalActions"
 
 export const signIn = (user, history) => {
     return (dispatch) => {
@@ -36,6 +37,17 @@ export const fetchTransactions = () => {
             dispatch(fetchTransactionSuccess(res.data))
         }).catch(e => {
             dispatch(fetchTransactionError(e.response.data))
+        })
+    }
+}
+
+export const fetchAnimals = () => {
+    return (dispatch) => {
+        dispatch(fetchAnimalsRequest(true))
+        axios.get('/animals').then(res => {
+            dispatch(fetchAnimalsSuccess(res.data))
+        }).catch(e => {
+            dispatch(fetchAnimalsError(e.response.data))
         })
     }
 }
