@@ -2,26 +2,26 @@ import * as actions from '../types'
 
 const initialState = {
     loading: false,
-    users: [],
+    categories: [],
     error: ''
 }
 
-const userReducer = (state = initialState, action) => {
+const categoryReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actions.FETCH_USERS_REQUEST:
+        case actions.FETCH_CATEGORIES_REQUEST:
             return {
                 ...state, loading: true
             }
-        case actions.FETCH_USERS_SUCCESS:
+        case actions.FETCH_CATEGORIES_SUCCESS:
             return {
                 loading: false,
-                users: action.payload,
+                categories: action.payload,
                 error: ''
             }
-        case actions.FETCH_USERS_ERROR:
+        case actions.FETCH_CATEGORIES_ERROR:
             return {
                 loading: false,
-                users: [],
+                categories: [],
                 error: action.payload
             }
         default:
@@ -29,4 +29,4 @@ const userReducer = (state = initialState, action) => {
     }
 }
 
-export default userReducer
+export default categoryReducer

@@ -4,7 +4,7 @@ import User from "../components/User"
 import Animal from "../components/Animal"
 import Farm from "../components/Farm"
 import Report from "../components/Report"
-import Transactions from "../components/Transaction"
+import Transactions from "../components/Sales"
 import {Redirect} from "react-router-dom"
 import {connect} from 'react-redux'
 
@@ -31,7 +31,7 @@ function Content({match:{params}, authenticated}) {
 }
 
 const mapStateToProps = state => ({
-    authenticated: state.userData.authenticated
+    authenticated: state.authData.authenticated
 })
 
 export default connect(mapStateToProps)(Content)

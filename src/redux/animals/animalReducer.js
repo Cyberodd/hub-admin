@@ -3,7 +3,7 @@ import * as actions from '../types'
 const initialState = {
     loading: false,
     animals: [],
-    errors: {}
+    error: ''
 }
 
 const animalReducer = (state = initialState, action) => {
@@ -16,13 +16,13 @@ const animalReducer = (state = initialState, action) => {
             return {
                 loading: false,
                 animals: action.payload,
-                errors: {}
+                error: ''
             }
         case actions.FETCH_ANIMALS_ERROR:
             return {
                 loading: false,
                 animals: [],
-                errors: action.payload
+                error: action.payload
             }
         default:
             return state

@@ -1,25 +1,75 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {connect} from 'react-redux'
+import {CircularProgress, Typography} from "material-ui-core"
+import dayJs from 'dayjs'
 
-class User extends Component {
-    render() {
-        return (
-            <div>
-                <p>Users Page</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium recusandae sint veniam! Ad
-                    delectus fugiat in, iste modi nobis nulla provident quas tenetur totam. A aperiam dolor doloribus
-                    earum error est et illo in inventore maxime nam nemo omnis praesentium quam quia quidem rem saepe
-                    tenetur, veritatis, voluptas? Blanditiis doloribus provident repellat tempore, veniam voluptate.
-                    Accusantium alias beatae dolor doloremque ea eius esse id, libero nostrum quos. A at error maiores
-                    minus necessitatibus nihil nulla numquam omnis optio pariatur perspiciatis provident quasi repellat
-                    velit, voluptas? Accusantium ad adipisci at commodi consequuntur culpa doloremque eligendi eos est
-                    expedita facere incidunt inventore, libero minus molestias nemo nesciunt nisi, porro quae quam qui
-                    quibusdam quod repellendus tempora tenetur. Ad aliquid aperiam autem culpa cum delectus deserunt
-                    dolore dolores doloribus earum enim fuga fugit illum in ipsum, iste magni maxime minus non omnis
-                    placeat quaerat quis ratione sunt suscipit tenetur, ullam unde velit veniam vero. Accusamus culpa
-                    cum est nam rem. Aspernatur, corporis iste.</p>
-            </div>
-        )
+function User({userData: {users, loading, error}}) {
+
+    const handleSubmit = () => {
+
     }
+
+    return (
+        <div className='text-center'>
+            <div className='row justify-content-center'>
+                <div className='col-md-8'>
+                    <form onSubmit={handleSubmit}>
+                        <div className='input-group'>
+                            <input type='text' className='form-control search-input custom-input'
+                                   placeholder='Search users e.g John'/>
+                            <button type='button' className='btn btn-primary search-button custom-button'>
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {loading ? <CircularProgress size={50} style={{marginTop: 10}} color='primary'/> : (
+                error !== '' ? (
+                    <p style={{color: 'red'}} className='p-4'>
+                        Failed to load Users. Refresh to retry
+                    </p>
+                ) : (
+                    users.length > 0 ? (
+                        <table className='table bg-light text-center mt-2'>
+                            <thead>
+                            <tr className='text-muted'>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Farm</th>
+                                <th>Registration Date</th>
+                            </tr>
+                            </thead>
+                            {users.map((user, index) => (
+                                <tbody key={user["userId"]}>
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td>{user["name"]}</td>
+                                    <td>{user["email"]}</td>
+                                    <td>{user["phone"]}</td>
+                                    {user['farmName'] !== '' ? (
+                                        <td>{user["farmName"]}</td>
+                                    ) : (
+                                        <td>Not found</td>
+                                    )}
+                                    <td>{dayJs(user['createdAt']).format('ddd MMM YYYY HH:mm')}</td>
+                                </tr>
+                                </tbody>
+                            ))}
+                        </table>
+                    ) : (
+                        <Typography variant='body2'>No Users found</Typography>
+                    )
+                )
+            )}
+        </div>
+    )
 }
 
-export default User
+const mapStateToProps = state => ({
+    userData: state.userData
+})
+
+export default connect(mapStateToProps)(User)

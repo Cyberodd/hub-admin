@@ -1,28 +1,22 @@
 import * as actions from '../types'
 
-export const signInRequest = bool => {
+export const fetchUsersRequest = bool => {
     return {
-        type: actions.SIGN_IN_REQUEST,
+        type: actions.FETCH_USERS_REQUEST,
         payload: bool
     }
 }
 
-export const signInSuccess = user => {
+export const fetchUsersSuccess = users => {
     return {
-        type: actions.SIGN_IN_SUCCESS,
-        payload: user
+        type: actions.FETCH_USERS_SUCCESS,
+        payload: users
     }
 }
 
-export const signInError = error => {
+export const fetchUsersError = error => {
     return {
-        type: actions.SIGN_IN_ERROR,
+        type: actions.FETCH_USERS_ERROR,
         payload: error
-    }
-}
-
-export const signOut = () => {
-    return {
-        type: actions.SIGN_OUT_SUCCESS,
     }
 }

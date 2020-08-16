@@ -9,7 +9,7 @@ const styles = theme => ({
     ...theme.styling
 })
 
-function Signin({classes, signIn, history, userData: {loading, errors: {email, password, general}}}) {
+function Signin({classes, signIn, history, authData: {loading, errors: {email, password, general}}}) {
 
     const [user, setUser] = useState({email: '', password: ''})
 
@@ -49,7 +49,7 @@ function Signin({classes, signIn, history, userData: {loading, errors: {email, p
 }
 
 const mapStateToProps = state => ({
-    userData: state.userData
+    authData: state.authData
 })
 
 const mapActionsToProps = dispatch => ({

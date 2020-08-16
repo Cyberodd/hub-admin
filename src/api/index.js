@@ -1,13 +1,14 @@
 import axios from 'axios'
 
-import {signInError, signInRequest, signInSuccess, signOut} from "../redux/users/userActions"
+import {signInError, signInRequest, signInSuccess, signOut} from "../redux/auth/authActions"
+import {fetchUsersError, fetchUsersRequest, fetchUsersSuccess} from '../redux/users/userActions'
 import {CLEAR_ERRORS} from "../redux/types"
 import {
-    fetchTransactionError,
-    fetchTransactionRequest,
-    fetchTransactionSuccess
-} from "../redux/transactions/transactionActions"
+    fetchTransactionError, fetchTransactionRequest, fetchTransactionSuccess
+} from "../redux/sales/salesActions"
 import {fetchAnimalsError, fetchAnimalsRequest, fetchAnimalsSuccess} from "../redux/animals/animalActions"
+import {fetchCategoriesError, fetchCategoriesRequest, fetchCategoriesSuccess} from "../redux/categories/categoryActions"
+import {fetchAdminsError, fetchAdminsRequest, fetchAdminsSuccess} from "../redux/users/adminActions"
 
 export const signIn = (user, history) => {
     return (dispatch) => {
@@ -30,13 +31,25 @@ export const signOutUser = () => {
     }
 }
 
+export const fetchCategories = () => {
+    return (dispatch) => {
+        dispatch(fetchCategoriesRequest(true))
+        axios.get('/categories').then(res => {
+            dispatch(fetchCategoriesSuccess(res.data))
+        }).catch(e => {
+            console.log(e.response)
+            dispatch(fetchCategoriesError(e.response.data))
+        })
+    }
+}
+
 export const fetchTransactions = () => {
     return (dispatch) => {
         dispatch(fetchTransactionRequest(true))
         axios.get('/transactions').then(res => {
             dispatch(fetchTransactionSuccess(res.data))
         }).catch(e => {
-            dispatch(fetchTransactionError(e.response.data))
+            dispatch(fetchTransactionError(e.message))
         })
     }
 }
@@ -47,7 +60,29 @@ export const fetchAnimals = () => {
         axios.get('/animals').then(res => {
             dispatch(fetchAnimalsSuccess(res.data))
         }).catch(e => {
-            dispatch(fetchAnimalsError(e.response.data))
+            dispatch(fetchAnimalsError(e.message))
+        })
+    }
+}
+
+export const fetchAdmins = () => {
+    return (dispatch) => {
+        dispatch(fetchAdminsRequest(true))
+        axios.get('/users/admins').then(res => {
+            dispatch(fetchAdminsSuccess(res.data))
+        }).catch(e => {
+            dispatch(fetchAdminsError(e.message))
+        })
+    }
+}
+
+export const fetchUsers = () => {
+    return (dispatch) => {
+        dispatch(fetchUsersRequest(true))
+        axios.get('/users').then(res => {
+            dispatch(fetchUsersSuccess(res.data))
+        }).catch(e => {
+            dispatch(fetchUsersError(e.message))
         })
     }
 }

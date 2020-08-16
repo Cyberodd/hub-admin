@@ -2,31 +2,30 @@ import * as actions from '../types'
 
 const initialState = {
     loading: false,
-    users: [],
+    admins: [],
     error: ''
 }
 
-const userReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case actions.FETCH_USERS_REQUEST:
+const adminReducer = (state = initialState, action) => {
+    switch (action.type){
+        case actions.FETCH_ADMINS_REQUEST:
             return {
                 ...state, loading: true
             }
-        case actions.FETCH_USERS_SUCCESS:
+        case actions.FETCH_ADMINS_SUCCESS:
             return {
                 loading: false,
-                users: action.payload,
+                admins: action.payload,
                 error: ''
             }
-        case actions.FETCH_USERS_ERROR:
+        case actions.FETCH_ADMINS_ERROR:
             return {
                 loading: false,
-                users: [],
+                admins: [],
                 error: action.payload
             }
-        default:
-            return state
+        default : return state
     }
 }
 
-export default userReducer
+export default adminReducer

@@ -2,11 +2,11 @@ import * as actions from '../types'
 
 const initialState = {
     loading: false,
-    transactions: [],
+    sales: [],
     errors: {}
 }
 
-const transactionReducer = (state = initialState, action) => {
+const salesReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.FETCH_TRANSACTIONS_REQUEST:
             return {
@@ -15,13 +15,13 @@ const transactionReducer = (state = initialState, action) => {
         case actions.FETCH_TRANSACTIONS_SUCCESS:
             return {
                 loading: false,
-                transactions: action.payload,
+                sales: action.payload,
                 errors: {}
             }
         case actions.FETCH_TRANSACTIONS_ERROR:
             return {
                 loading: false,
-                transactions: [],
+                sales: [],
                 errors: action.payload
             }
         default:
@@ -29,4 +29,4 @@ const transactionReducer = (state = initialState, action) => {
     }
 }
 
-export default transactionReducer
+export default salesReducer
