@@ -8,13 +8,12 @@ import {
 } from "../redux/sales/salesActions"
 import {fetchAnimalsError, fetchAnimalsRequest, fetchAnimalsSuccess} from "../redux/animals/animalActions"
 import {
-    addCategoryError,
-    addCategoryRequest, addCategorySuccess,
-    fetchCategoriesError,
-    fetchCategoriesRequest,
+    addCategoryError, addCategoryRequest, addCategorySuccess, deleteCategory, fetchCategoriesError, fetchCategoriesRequest,
     fetchCategoriesSuccess
 } from "../redux/categories/categoryActions"
-import {fetchAdminsError, fetchAdminsRequest, fetchAdminsSuccess} from "../redux/users/adminActions"
+import {
+    addAdminError, addAdminRequest, addAdminSuccess, deleteAdmin, fetchAdminsError, fetchAdminsRequest, fetchAdminsSuccess
+} from "../redux/users/adminActions"
 
 export const signIn = (user, history) => {
     return (dispatch) => {
@@ -100,6 +99,37 @@ export const addCategory = category => {
             dispatch(addCategorySuccess(res.data))
         }).catch(e => {
             dispatch(addCategoryError(e.response.data))
+        })
+    }
+}
+
+export const removeCategory = categoryId => {
+    return (dispatch) => {
+        axios.delete(`/categories/${categoryId}`).then(() => {
+            dispatch(deleteCategory(categoryId))
+        }).catch(err => {
+            console.log(err.message)
+        })
+    }
+}
+
+export const removeAdmin = adminId => {
+    return (dispatch) => {
+        axios.delete(`/users/admins/${adminId}`).then(() => {
+            dispatch(deleteAdmin(adminId))
+        }).catch(err => {
+            console.log(err.message)
+        })
+    }
+}
+
+export const addAdmin = admin => {
+    return (dispatch) => {
+        dispatch(addAdminRequest(true))
+        axios.post('/register', admin).then(res => {
+            dispatch(addAdminSuccess(res.data))
+        }).catch(e => {
+            dispatch(addAdminError(e.response.data))
         })
     }
 }

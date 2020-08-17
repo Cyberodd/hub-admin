@@ -38,6 +38,14 @@ const categoryReducer = (state = initialState, action) => {
             return {
                 ...state, errors: action.payload, catLoading: false
             }
+        case actions.CLEAR_ERRORS:
+            return {
+                ...state, errors: {}
+            }
+        case actions.DELETE_CATEGORY:
+            return {
+                ...state, categories: state.categories.filter(category => category['categoryId'] !== action.payload)
+            }
         default:
             return state
     }

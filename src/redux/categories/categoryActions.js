@@ -41,3 +41,10 @@ export const addCategoryError = error => {
         payload: error
     }
 }
+
+export const deleteCategory = categoryId => {
+    return {
+        type: actions.DELETE_CATEGORY,
+        payload: categoryId
+    }
+}

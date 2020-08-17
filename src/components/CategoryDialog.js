@@ -1,7 +1,9 @@
 import React, {Fragment, useState} from 'react'
 import {Button, Dialog, DialogActions, DialogContent, Typography} from "material-ui-core"
+import {removeCategory} from "../api"
+import {connect} from 'react-redux'
 
-function CategoryDialog({category}) {
+function CategoryDialog({category, removeCategory}) {
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -12,7 +14,8 @@ function CategoryDialog({category}) {
     const {categoryName, categoryId} = category
 
     const handleDelete = () => {
-        console.log('Deleting category with ID: ', categoryId)
+        removeCategory(categoryId)
+        handleClose()
     }
 
     return (
@@ -22,8 +25,8 @@ function CategoryDialog({category}) {
             </button>
             <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='xs'>
                 <DialogContent>
-                    <Typography variant='body2'>Your are about to delete a category with the name {categoryName} from
-                        your category list. Are you sure you want to proceed?
+                    <Typography variant='body2'>Your are about to delete a category with the
+                        name <b>{categoryName}</b> from your category list. Are you sure you want to proceed?
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -39,4 +42,12 @@ function CategoryDialog({category}) {
     )
 }
 
-export default CategoryDialog
+const mapStateToProps = state => ({
+    categoryData: state.categoryData
+})
+
+const mapActionsToProps = dispatch => ({
+    removeCategory: (categoryId) => dispatch(removeCategory(categoryId))
+})
+
+export default connect(mapStateToProps, mapActionsToProps)(CategoryDialog)
