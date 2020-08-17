@@ -7,7 +7,13 @@ import {
     fetchTransactionError, fetchTransactionRequest, fetchTransactionSuccess
 } from "../redux/sales/salesActions"
 import {fetchAnimalsError, fetchAnimalsRequest, fetchAnimalsSuccess} from "../redux/animals/animalActions"
-import {fetchCategoriesError, fetchCategoriesRequest, fetchCategoriesSuccess} from "../redux/categories/categoryActions"
+import {
+    addCategoryError,
+    addCategoryRequest, addCategorySuccess,
+    fetchCategoriesError,
+    fetchCategoriesRequest,
+    fetchCategoriesSuccess
+} from "../redux/categories/categoryActions"
 import {fetchAdminsError, fetchAdminsRequest, fetchAdminsSuccess} from "../redux/users/adminActions"
 
 export const signIn = (user, history) => {
@@ -83,6 +89,17 @@ export const fetchUsers = () => {
             dispatch(fetchUsersSuccess(res.data))
         }).catch(e => {
             dispatch(fetchUsersError(e.message))
+        })
+    }
+}
+
+export const addCategory = category => {
+    return (dispatch) => {
+        dispatch(addCategoryRequest(true))
+        axios.post('/categories', category).then(res => {
+            dispatch(addCategorySuccess(res.data))
+        }).catch(e => {
+            dispatch(addCategoryError(e.response.data))
         })
     }
 }

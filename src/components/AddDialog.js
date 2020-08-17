@@ -1,16 +1,23 @@
 import React, {Fragment, useState} from 'react'
-import {Button, Dialog, DialogContent, TextField, Typography} from "material-ui-core"
+import {Button, CircularProgress, Dialog, DialogContent, TextField, Typography} from "material-ui-core"
+import {connect} from 'react-redux'
+import {addCategory} from "../api"
 
-function AddDialog({isAdmin, isCategory}) {
+function AddDialog({isAdmin, isCategory, addCategory, categoryData: {catLoading, errors}}) {
 
     const [isOpen, setIsOpen] = useState(false)
+    const [category, setCategory] = useState({name: ''})
 
     const handleClose = () => {
         setIsOpen(false)
     }
 
-    const handleChange = event => {
+    const errorMsg = errors && errors.name
 
+    const handleChange = event => {
+        if (isCategory !== undefined) {
+            setCategory({...category, [event.target.name]: event.target.value})
+        }
     }
 
     const submitAdmin = e => {
@@ -19,16 +26,21 @@ function AddDialog({isAdmin, isCategory}) {
 
     const submitCategory = e => {
         e.preventDefault()
+        addCategory(category)
+        setCategory({name: ''})
     }
 
     const renderAddCategory = (
-        <div>
+        <div className='text-center'>
             <Typography variant='h6'>Add a new Category</Typography>
-            <form onSubmit={submitCategory}>
-                <TextField label='Category Name' type='text' name='name' variant='outlined' fullWidth size='small'
-                           id='name' margin='normal' color='secondary' onChange={handleChange}/>
-                <Button variant='outlined' size='small' color='primary' fullWidth className='mt-3 mb-3'>Submit</Button>
-            </form>
+            <TextField label='Category Name' type='text' name='name' variant='outlined' fullWidth size='small' id='name'
+                       margin='normal' color='secondary' onChange={handleChange} value={category.name} required
+                       helperText={errorMsg} error={!!errorMsg}/>
+            {catLoading && <CircularProgress size={25} style={{marginTop: 10}} color='primary'/>}
+            <Button variant='outlined' size='small' color='secondary' fullWidth className='mt-3 mb-3'
+                    onClick={submitCategory}>
+                Submit
+            </Button>
         </div>
     )
 
@@ -65,4 +77,12 @@ function AddDialog({isAdmin, isCategory}) {
     )
 }
 
-export default AddDialog
+const mapStateToProps = state => ({
+    categoryData: state.categoryData
+})
+
+const mapActionsToProps = dispatch => ({
+    addCategory: (category) => dispatch(addCategory(category))
+})
+
+export default connect(mapStateToProps, mapActionsToProps)(AddDialog)

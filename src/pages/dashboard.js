@@ -5,7 +5,7 @@ import {
     AppBar, CssBaseline, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography
 } from "material-ui-core"
 import {
-    MonetizationOnOutlined, AssessmentOutlined, PeopleAltOutlined, PetsOutlined, HomeOutlined, CategoryOutlined,
+    MonetizationOnOutlined, AssessmentOutlined, PeopleAltOutlined, PetsOutlined, CategoryOutlined, DashboardOutlined,
 } from '@material-ui/icons'
 import logo from '../assets/dairy-icon.png'
 import Content from "./content"
@@ -14,7 +14,7 @@ import {connect} from 'react-redux'
 import {fetchAdmins, fetchAnimals, fetchCategories, fetchTransactions, fetchUsers} from "../api"
 
 const drawerItems = [
-    {name: 'Dashboard', icon: <HomeOutlined/>, path: 'dashboard'},
+    {name: 'Dashboard', icon: <DashboardOutlined/>, path: 'dashboard'},
     {name: 'Farms', icon: <CategoryOutlined/>, path: 'farms'},
     {name: 'Animals', icon: <PetsOutlined/>, path: 'animals'},
     {name: 'Users', icon: <PeopleAltOutlined/>, path: 'users'},

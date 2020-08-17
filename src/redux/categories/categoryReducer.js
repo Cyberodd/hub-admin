@@ -2,8 +2,10 @@ import * as actions from '../types'
 
 const initialState = {
     loading: false,
+    catLoading: false,
     categories: [],
-    error: ''
+    error: '',
+    errors: {}
 }
 
 const categoryReducer = (state = initialState, action) => {
@@ -23,6 +25,18 @@ const categoryReducer = (state = initialState, action) => {
                 loading: false,
                 categories: [],
                 error: action.payload
+            }
+        case actions.ADD_CATEGORY_REQUEST:
+            return {
+                ...state, catLoading: true
+            }
+        case actions.ADD_CATEGORY_SUCCESS:
+            return {
+                ...state, categories: [...state.categories, action.payload], catLoading: false, errors: {}
+            }
+        case actions.ADD_CATEGORY_ERROR:
+            return {
+                ...state, errors: action.payload, catLoading: false
             }
         default:
             return state

@@ -17,8 +17,9 @@ function AdminDialog({admin}) {
 
     return (
         <Fragment>
-            <button className='btn btn-sm btn-outline-info btn-appearance' onClick={() => setIsOpen(true)}>
-                Edit
+            <button className='btn btn-sm btn-outline-info btn-appearance' onClick={() => setIsOpen(true)}
+                    disabled={email === 'admin@admin.com'}>
+                {email === 'admin@admin.com' ? 'Default' : 'Edit'}
             </button>
             <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='xs'>
                 <DialogContent>

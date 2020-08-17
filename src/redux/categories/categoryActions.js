@@ -20,3 +20,24 @@ export const fetchCategoriesError = error => {
         payload: error
     }
 }
+
+export const addCategoryRequest = bool => {
+    return {
+        type: actions.ADD_CATEGORY_REQUEST,
+        payload: bool
+    }
+}
+
+export const addCategorySuccess = category => {
+    return {
+        type: actions.ADD_CATEGORY_SUCCESS,
+        payload: category
+    }
+}
+
+export const addCategoryError = error => {
+    return {
+        type: actions.ADD_CATEGORY_ERROR,
+        payload: error
+    }
+}
