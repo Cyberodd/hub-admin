@@ -20,9 +20,9 @@ function CategoryDialog({category, removeCategory}) {
 
     return (
         <Fragment>
-            <button className='btn btn-sm btn-outline-danger btn-appearance' onClick={() => setIsOpen(true)}>
+            <Button variant='contained' color='secondary' size='small' onClick={() => setIsOpen(true)}>
                 Delete
-            </button>
+            </Button>
             <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='xs'>
                 <DialogContent>
                     <Typography variant='body2'>Your are about to delete a category with the

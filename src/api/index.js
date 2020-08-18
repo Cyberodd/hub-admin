@@ -12,7 +12,14 @@ import {
     fetchCategoriesSuccess
 } from "../redux/categories/categoryActions"
 import {
-    addAdminError, addAdminRequest, addAdminSuccess, deleteAdmin, fetchAdminsError, fetchAdminsRequest, fetchAdminsSuccess
+    addAdminError,
+    addAdminRequest,
+    addAdminSuccess,
+    deleteAdmin,
+    fetchAdminsError,
+    fetchAdminsRequest,
+    fetchAdminsSuccess, updateAdminError,
+    updateAdminRequest, updateAdminSuccess
 } from "../redux/users/adminActions"
 
 export const signIn = (user, history) => {
@@ -130,6 +137,17 @@ export const addAdmin = admin => {
             dispatch(addAdminSuccess(res.data))
         }).catch(e => {
             dispatch(addAdminError(e.response.data))
+        })
+    }
+}
+
+export const updateAdmin = (adminId, admin) => {
+    return (dispatch) => {
+        dispatch(updateAdminRequest(true))
+        axios.put(`/users/${adminId}`, admin).then(res => {
+            dispatch(updateAdminSuccess(res.data))
+        }).catch(e => {
+            dispatch(updateAdminError(e.message))
         })
     }
 }

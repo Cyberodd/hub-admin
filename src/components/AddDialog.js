@@ -45,7 +45,7 @@ function AddDialog({isAdmin, isCategory, addCategory, addAdmin, clearErrors, cat
                        margin='normal' color='secondary' onChange={handleChange} value={category.name} required
                        helperText={errorMsg} error={!!errorMsg}/>
             {catLoading && progress}
-            <Button variant='outlined' size='small' color='secondary' fullWidth className='mt-3 mb-3'
+            <Button variant='contained' size='small' color='primary' fullWidth className='mt-3 mb-3'
                     onClick={submitCategory} disabled={catLoading}>
                 Submit
             </Button>
@@ -72,7 +72,7 @@ function AddDialog({isAdmin, isCategory, addCategory, addAdmin, clearErrors, cat
                        helperText={adminData.errors && adminData.errors.password} value={admin.password}
                        error={adminData.errors && !!adminData.errors.name}/>
             {adminData.aLoading && progress}
-            <Button variant='outlined' size='small' color='primary' className='mt-3 mb-3' fullWidth
+            <Button variant='contained' size='small' color='primary' className='mt-3 mb-3' fullWidth
                     onClick={submitAdmin} disabled={adminData.aLoading}>
                 Submit
             </Button>

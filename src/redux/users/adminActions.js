@@ -49,9 +49,23 @@ export const deleteAdmin = adminId => {
     }
 }
 
-export const updateAdmin = admin => {
+export const updateAdminRequest = bool => {
     return {
-        type: actions.UPDATE_ADMIN,
+        type: actions.UPDATE_ADMIN_REQUEST,
+        payload: bool
+    }
+}
+
+export const updateAdminSuccess = admin => {
+    return {
+        type: actions.UPDATE_ADMIN_SUCCESS,
         payload: admin
+    }
+}
+
+export const updateAdminError = error => {
+    return {
+        type: actions.UPDATE_ADMIN_ERROR,
+        payload: error
     }
 }

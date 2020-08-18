@@ -46,6 +46,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state, errors: {}
             }
+        case actions.UPDATE_ADMIN_REQUEST:
+            return {
+                ...state, aLoading: true
+            }
+        case actions.UPDATE_ADMIN_SUCCESS:
+            return {
+                ...state, admins: state.admins.map(admin => admin['userId'] === action.payload['userId'] ? {
+                    ...admin, role: action.payload.role} : admin), aLoading: false
+            }
+        case actions.UPDATE_ADMIN_ERROR:
+            return {
+                ...state, error: action.payload, aLoading: false
+            }
         default : return state
     }
 }

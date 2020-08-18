@@ -70,10 +70,10 @@ function Sales({salesData: {sales, loading, error}}) {
                                 <td>{sale["type"]}</td>
                                 <td>{sale["quantity"]}</td>
                                 <td>
-                                    <button className='btn btn-sm btn-outline-success btn-appearance'
+                                    <Button variant='contained' color='primary' size='small'
                                             onClick={() => setSale(sale)}>
                                         View
-                                    </button>
+                                    </Button>
                                 </td>
                             </tr>
                             </tbody>

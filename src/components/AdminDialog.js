@@ -1,42 +1,82 @@
 import React, {Fragment, useState} from 'react'
-import {Button, Dialog, DialogActions, DialogContent} from "material-ui-core"
+import {Button, Dialog, DialogContent, TextField} from "material-ui-core"
+import {connect} from 'react-redux'
+import {removeAdmin, updateAdmin} from "../api"
 
-function AdminDialog({admin}) {
+function AdminDialog({admin, removeAdmin, updateAdmin, adminData}) {
 
     const [isOpen, setIsOpen] = useState(false)
+    const [role, setRole] = useState(admin.role)
+    const {name, email, phone, regDate} = admin
 
     const handleClose = () => {
         setIsOpen(false)
     }
 
-    const {name, email} = admin
+    const handleDelete = e => {
+        e.preventDefault()
+        removeAdmin(admin['userId'])
+        handleClose()
+    }
 
-    const handleDelete = () => {
-        console.log('Deleting category with ID: ', name)
+    const handleEdit = e => {
+        e.preventDefault()
+        if (role !== admin.role) {
+            const updatedAdmin = {role}
+            updateAdmin(admin['userId'], updatedAdmin)
+            handleClose()
+        }
     }
 
     return (
         <Fragment>
-            <button className='btn btn-sm btn-outline-info btn-appearance' onClick={() => setIsOpen(true)}
-                    disabled={email === 'admin@admin.com'}>
+            <Button variant='contained' color='primary' size='small' onClick={() => setIsOpen(true)}
+                    disabled={email === 'admin@admin.com'} style={{width: '80px'}}>
                 {email === 'admin@admin.com' ? 'Default' : 'Edit'}
-            </button>
+            </Button>
             <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='xs'>
                 <DialogContent>
-                    <p>{name}</p>
-                    <p>{email}</p>
+                    <h6>{admin.name} details</h6>
+                    <TextField label='name' type='text' name='name' variant='outlined' fullWidth size='small'
+                               id='name' margin='normal' color='secondary' value={name} disabled/>
+                    <TextField label='email' type='email' name='email' variant='outlined' fullWidth size='small'
+                               id='email' margin='normal' color='secondary' value={email} disabled/>
+                    <TextField label='Phone' type='text' name='phone' variant='outlined' fullWidth size='small'
+                               id='phone' margin='normal' color='secondary' value={phone} disabled/>
+                    <TextField label='Reg Date' type='text' name='regDate' variant='outlined' fullWidth size='small'
+                               id='regDate' margin='normal' color='secondary' value={regDate} disabled/>
+                    <select name="role" className="form-control mt-3" onChange={e => setRole(e.target.value)}
+                            value={role} id='name'>
+                        <option value='user'>user</option>
+                        <option value='admin'>admin</option>
+                    </select>
+                    <div className="row py-4">
+                        <div className="col-6">
+                            <Button type='submit' variant='contained' color='secondary' size='small'
+                                    onClick={handleDelete} disabled={adminData.aLoading}>
+                                Delete User
+                            </Button>
+                        </div>
+                        <div className="col-6">
+                            <Button type='submit' variant='contained' color='primary' size='small'
+                                    className='float-right' onClick={handleEdit} disabled={adminData.aLoading}>
+                                Update User
+                            </Button>
+                        </div>
+                    </div>
                 </DialogContent>
-                <DialogActions>
-                    <Button type='submit' variant='contained' color='secondary' size='small' onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button type='submit' variant='contained' color='primary' size='small' onClick={handleDelete}>
-                        Yes
-                    </Button>
-                </DialogActions>
             </Dialog>
         </Fragment>
     )
 }
 
-export default AdminDialog
+const mapStateToProps = state => ({
+    adminData: state.adminData
+})
+
+const mapActionsToProps = dispatch => ({
+    removeAdmin: (adminId) => dispatch(removeAdmin(adminId)),
+    updateAdmin: (adminId, admin) => dispatch(updateAdmin(adminId, admin))
+})
+
+export default connect(mapStateToProps, mapActionsToProps)(AdminDialog)

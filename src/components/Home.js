@@ -47,6 +47,7 @@ function Home({categoryData, adminData, userData, animalData, salesData}) {
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -57,6 +58,7 @@ function Home({categoryData, adminData, userData, animalData, salesData}) {
                                 <td>{index + 1}</td>
                                 <td>{admin["name"]}</td>
                                 <td>{admin["email"]}</td>
+                                <td>{admin["role"]}</td>
                                 <td>
                                     <AdminDialog admin={admin}/>
                                 </td>

@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {CircularProgress, Typography} from "material-ui-core"
-import dayJs from 'dayjs'
 
 function User({userData: {users, loading, error}}) {
 
@@ -54,7 +53,7 @@ function User({userData: {users, loading, error}}) {
                                     ) : (
                                         <td>Not found</td>
                                     )}
-                                    <td>{dayJs(user['createdAt']).format('ddd MMM YYYY HH:mm')}</td>
+                                    <td>{user['regDate']}</td>
                                 </tr>
                                 </tbody>
                             ))}
