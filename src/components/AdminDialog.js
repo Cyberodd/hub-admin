@@ -3,7 +3,7 @@ import {Button, Dialog, DialogContent, TextField} from "material-ui-core"
 import {connect} from 'react-redux'
 import {removeAdmin, updateAdmin} from "../api"
 
-function AdminDialog({admin, removeAdmin, updateAdmin, adminData}) {
+function AdminDialog({admin, removeAdmin, updateAdmin, adminData, authData}) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [role, setRole] = useState(admin.role)
@@ -31,7 +31,7 @@ function AdminDialog({admin, removeAdmin, updateAdmin, adminData}) {
     return (
         <Fragment>
             <Button variant='contained' color='primary' size='small' onClick={() => setIsOpen(true)}
-                    disabled={email === 'admin@admin.com'} style={{width: '80px'}}>
+                    disabled={email === 'admin@admin.com' || email === authData.user} style={{width: '80px'}}>
                 {email === 'admin@admin.com' ? 'Default' : 'Edit'}
             </Button>
             <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='xs'>
@@ -71,7 +71,8 @@ function AdminDialog({admin, removeAdmin, updateAdmin, adminData}) {
 }
 
 const mapStateToProps = state => ({
-    adminData: state.adminData
+    adminData: state.adminData,
+    authData: state.authData
 })
 
 const mapActionsToProps = dispatch => ({

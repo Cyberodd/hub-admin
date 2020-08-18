@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {NavLink, Route} from 'react-router-dom'
 import {makeStyles} from "material-ui-core/styles"
+import dayJs from 'dayjs'
 import {
     AppBar, CssBaseline, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography
 } from "material-ui-core"
@@ -50,7 +51,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Dashboard({fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetchTransactions}) {
+
     const classes = useStyles()
+
+    console.log(dayJs(new Date().toISOString()).format('D MMM YYYY'))
 
     useEffect(() => {
         fetchCategories()

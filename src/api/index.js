@@ -1,25 +1,21 @@
 import axios from 'axios'
-
 import {signInError, signInRequest, signInSuccess, signOut} from "../redux/auth/authActions"
 import {fetchUsersError, fetchUsersRequest, fetchUsersSuccess} from '../redux/users/userActions'
 import {CLEAR_ERRORS} from "../redux/types"
+import {fetchTransactionError, fetchTransactionRequest, fetchTransactionSuccess} from "../redux/sales/salesActions"
 import {
-    fetchTransactionError, fetchTransactionRequest, fetchTransactionSuccess
-} from "../redux/sales/salesActions"
-import {fetchAnimalsError, fetchAnimalsRequest, fetchAnimalsSuccess} from "../redux/animals/animalActions"
+    fetchAnimalsError,
+    fetchAnimalsRequest,
+    fetchAnimalsSuccess, searchError,
+    searchRequest, searchSuccess
+} from "../redux/animals/animalActions"
 import {
-    addCategoryError, addCategoryRequest, addCategorySuccess, deleteCategory, fetchCategoriesError, fetchCategoriesRequest,
-    fetchCategoriesSuccess
+    addCategoryError, addCategoryRequest, addCategorySuccess, deleteCategory, fetchCategoriesError,
+    fetchCategoriesRequest, fetchCategoriesSuccess
 } from "../redux/categories/categoryActions"
 import {
-    addAdminError,
-    addAdminRequest,
-    addAdminSuccess,
-    deleteAdmin,
-    fetchAdminsError,
-    fetchAdminsRequest,
-    fetchAdminsSuccess, updateAdminError,
-    updateAdminRequest, updateAdminSuccess
+    addAdminError, addAdminRequest, addAdminSuccess, deleteAdmin, fetchAdminsError, fetchAdminsRequest,
+    fetchAdminsSuccess, updateAdminError, updateAdminRequest, updateAdminSuccess
 } from "../redux/users/adminActions"
 
 export const signIn = (user, history) => {
@@ -148,6 +144,17 @@ export const updateAdmin = (adminId, admin) => {
             dispatch(updateAdminSuccess(res.data))
         }).catch(e => {
             dispatch(updateAdminError(e.message))
+        })
+    }
+}
+
+export const searchAnimal = name => {
+    return (dispatch) => {
+        dispatch(searchRequest(true))
+        axios.get(`/animals/${name}`).then(res => {
+            dispatch(searchSuccess(res.data))
+        }).catch(e => {
+            dispatch(searchError(e.message))
         })
     }
 }

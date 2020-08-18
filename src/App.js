@@ -25,7 +25,7 @@ if (token){
     } else {
         store.dispatch({
             type: SIGN_IN_SUCCESS,
-            // payload: token
+            payload: decodedToken.email
         });
         axios.defaults.headers.common['Authorization'] = token;
     }
