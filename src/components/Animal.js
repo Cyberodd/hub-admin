@@ -14,6 +14,7 @@ function Animal({searchAnimal, searchData, animalData: {animals, loading, error}
         if (name !== '') {
             setIsSearch(true)
             searchAnimal(name.toLowerCase())
+            setName('')
         } else {
             setIsSearch(false)
         }
@@ -30,18 +31,38 @@ function Animal({searchAnimal, searchData, animalData: {animals, loading, error}
 
     const renderError = (<p style={{color: 'red'}} className='p-4'>Failed to load Animals. Refresh to retry</p>)
 
-    const renderTable = (
-        <thead>
-        <tr className='text-muted'>
-            <th>#</th>
-            <th>Name</th>
-            <th>Breed</th>
-            <th>Category</th>
-            <th>Gender</th>
-            <th>Image</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
+    const renderData = animals => (
+        <table className='table bg-light text-center mt-2'>
+            <thead>
+            <tr className='text-muted'>
+                <th>#</th>
+                <th>Name</th>
+                <th>Breed</th>
+                <th>Category</th>
+                <th>Gender</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            {animals.map((animal, index) => (
+                <tbody key={animal["animalId"]}>
+                <tr>
+                    <td>{index + 1}</td>
+                    <td style={{textTransform: 'capitalize'}}>{animal["animalName"]}</td>
+                    <td>{animal["animalBreed"]}</td>
+                    <td>{animal["category"]}</td>
+                    <td>{animal["gender"]}</td>
+                    <td>
+                        <img src={animal["imageUrl"]} alt={animal["animalName"]} height='50'
+                             style={{borderRadius: 50}}/>
+                    </td>
+                    <td>
+                        <AnimalDialog animal={animal}/>
+                    </td>
+                </tr>
+                </tbody>
+            ))}
+        </table>
     )
 
     return (
@@ -64,27 +85,7 @@ function Animal({searchAnimal, searchData, animalData: {animals, loading, error}
                     renderError
                 ) : (
                     animals.length > 0 ? (
-                        <table className='table bg-light text-center mt-2'>
-                            {renderTable}
-                            {animals.map((animal, index) => (
-                                <tbody key={animal["animalId"]}>
-                                <tr>
-                                    <td>{index + 1}</td>
-                                    <td style={{textTransform: 'capitalize'}}>{animal["animalName"]}</td>
-                                    <td>{animal["animalBreed"]}</td>
-                                    <td>{animal["category"]}</td>
-                                    <td>{animal["gender"]}</td>
-                                    <td>
-                                        <img src={animal["imageUrl"]} alt={animal["animalName"]} height='50'
-                                             style={{borderRadius: 50}}/>
-                                    </td>
-                                    <td>
-                                        <AnimalDialog animal={animal}/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            ))}
-                        </table>
+                        renderData(animals)
                     ) : (
                         <p style={{color: 'red', margin: 20}}>No Animals found</p>
                     )
@@ -95,27 +96,7 @@ function Animal({searchAnimal, searchData, animalData: {animals, loading, error}
                         renderError
                     ) : (
                         searchData.animals.length > 0 ? (
-                            <table className='table bg-light text-center mt-2'>
-                                {renderTable}
-                                {searchData.animals.map((animal, index) => (
-                                    <tbody key={animal["animalId"]}>
-                                    <tr>
-                                        <td>{index + 1}</td>
-                                        <td style={{textTransform: 'capitalize'}}>{animal["animalName"]}</td>
-                                        <td>{animal["animalBreed"]}</td>
-                                        <td>{animal["category"]}</td>
-                                        <td>{animal["gender"]}</td>
-                                        <td>
-                                            <img src={animal["imageUrl"]} alt={animal["animalName"]} height='50'
-                                                 style={{borderRadius: 50}}/>
-                                        </td>
-                                        <td>
-                                            <AnimalDialog animal={animal}/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                ))}
-                            </table>
+                            renderData(searchData.animals)
                         ) : (
                             <p style={{color: 'red', margin: 20}}>No animal name matched your query</p>
                         )
@@ -132,7 +113,7 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = dispatch => ({
-    searchAnimal: (name) => dispatch(searchAnimal(name))
+    "searchAnimal": (name) => dispatch(searchAnimal(name))
 })
 
 export default connect(mapStateToProps, mapActionsToProps)(Animal)

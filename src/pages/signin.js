@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = dispatch => ({
-    signIn: (user, history) => dispatch(signIn(user, history)),
+    'signIn': (user, history) => dispatch(signIn(user, history)),
 })
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Signin))

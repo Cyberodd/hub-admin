@@ -6,7 +6,7 @@ import {
     AppBar, CssBaseline, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography
 } from "material-ui-core"
 import {
-    MonetizationOnOutlined, AssessmentOutlined, PeopleAltOutlined, PetsOutlined, CategoryOutlined, DashboardOutlined,
+    MonetizationOnOutlined, AssessmentOutlined, PeopleAltOutlined, PetsOutlined, DashboardOutlined,
 } from '@material-ui/icons'
 import logo from '../assets/dairy-icon.png'
 import Content from "./content"
@@ -16,7 +16,7 @@ import {fetchAdmins, fetchAnimals, fetchCategories, fetchTransactions, fetchUser
 
 const drawerItems = [
     {name: 'Dashboard', icon: <DashboardOutlined/>, path: 'dashboard'},
-    {name: 'Farms', icon: <CategoryOutlined/>, path: 'farms'},
+    // {name: 'Farms', icon: <CategoryOutlined/>, path: 'farms'},
     {name: 'Animals', icon: <PetsOutlined/>, path: 'animals'},
     {name: 'Users', icon: <PeopleAltOutlined/>, path: 'users'},
     {name: 'Transactions', icon: <MonetizationOnOutlined/>, path: 'transactions'},
@@ -54,14 +54,12 @@ function Dashboard({fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetc
 
     const classes = useStyles()
 
-    console.log(dayJs(new Date().toISOString()).format('D MMM YYYY'))
-
     useEffect(() => {
         fetchCategories()
         fetchAdmins()
         fetchUsers()
         fetchAnimals()
-        fetchTransactions()
+        fetchTransactions(dayJs(new Date().toISOString()).format('D MMM YYYY'))
     }, [fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetchTransactions])
 
     return (
@@ -110,7 +108,7 @@ const mapActionsToProps = dispatch => ({
     fetchAdmins: () => dispatch(fetchAdmins()),
     fetchUsers: () => dispatch(fetchUsers()),
     fetchAnimals: () => dispatch(fetchAnimals()),
-    fetchTransactions: () => dispatch(fetchTransactions())
+    fetchTransactions: (day) => dispatch(fetchTransactions(day))
 })
 
 export default connect(mapStateToProps, mapActionsToProps)(Dashboard)

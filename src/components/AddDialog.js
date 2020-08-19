@@ -102,7 +102,7 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => ({
     addCategory: (category) => dispatch(addCategory(category)),
-    addAdmin: (admin) => dispatch(addAdmin(admin)),
+    'addAdmin': (admin) => dispatch(addAdmin(admin)),
     clearErrors: () => dispatch(clearErrors())
 })
 

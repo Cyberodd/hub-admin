@@ -56,7 +56,7 @@ function Home({categoryData, adminData, userData, animalData, salesData}) {
                             <tbody key={admin["userId"]}>
                             <tr>
                                 <td>{index + 1}</td>
-                                <td>{admin["name"]}</td>
+                                <td style={{textTransform: 'capitalize'}}>{admin["name"]}</td>
                                 <td>{admin["email"]}</td>
                                 <td>{admin["role"]}</td>
                                 <td>

@@ -2,7 +2,6 @@ import React from 'react'
 import Home from "../components/Home"
 import User from "../components/User"
 import Animal from "../components/Animal"
-import Farm from "../components/Farm"
 import Report from "../components/Report"
 import Transactions from "../components/Sales"
 import {Redirect} from "react-router-dom"
@@ -15,7 +14,7 @@ function Content({match:{params}, authenticated}) {
     const renderComponents = (() => {
         switch (params.item){
             case 'dashboard': return <Home/>
-            case 'farms': return <Farm/>
+            // case 'farms': return <Farm/>
             case 'animals': return <Animal/>
             case 'users': return <User/>
             case 'transactions': return <Transactions/>

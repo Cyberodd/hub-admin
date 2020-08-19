@@ -74,7 +74,9 @@ function AnimalDialog({animal, fetchAnimalOwner, userData: {owner}}) {
                             </div>
                         </div>
                         <div className="text-center">
-                            <p><b>Owner:</b> {owner && owner.name !== undefined ? owner.name: 'Not found'}</p>
+                            <p style={{textTransform: 'capitalize'}}>
+                                <b>Owner:</b> {owner && owner.name !== undefined ? owner.name: 'Not found'}
+                            </p>
                         </div>
                     </div>
                 </DialogContent>

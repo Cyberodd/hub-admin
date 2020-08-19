@@ -38,7 +38,9 @@ function SignOutDialog({signOut}) {
     )
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+    userData: state.userData
+})
 
 const mapActionsToProps = dispatch => ({
     signOut: () => dispatch(signOutUser())

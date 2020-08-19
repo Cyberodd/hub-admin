@@ -77,7 +77,7 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => ({
     removeAdmin: (adminId) => dispatch(removeAdmin(adminId)),
-    updateAdmin: (adminId, admin) => dispatch(updateAdmin(adminId, admin))
+    'updateAdmin': (adminId, admin) => dispatch(updateAdmin(adminId, admin))
 })
 
 export default connect(mapStateToProps, mapActionsToProps)(AdminDialog)

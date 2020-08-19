@@ -12,7 +12,9 @@ import {
     addAdminError, addAdminRequest, addAdminSuccess, deleteAdmin, fetchAdminsError, fetchAdminsRequest,
     fetchAdminsSuccess, updateAdminError, updateAdminRequest, updateAdminSuccess
 } from "../redux/users/adminActions"
-import {searchError, searchRequest, searchSuccess} from "../redux/searches/searchAction"
+import {
+    searchError, searchRequest, searchSuccess, searchUserError, searchUserRequest, searchUserSuccess
+} from "../redux/searches/searchAction"
 
 export const signIn = (user, history) => {
     return (dispatch) => {
@@ -47,13 +49,24 @@ export const fetchCategories = () => {
     }
 }
 
-export const fetchTransactions = () => {
+export const fetchTransactions = day => {
     return (dispatch) => {
         dispatch(fetchTransactionRequest(true))
-        axios.get('/transactions').then(res => {
+        axios.get(`/transactions/${day}`).then(res => {
             dispatch(fetchTransactionSuccess(res.data))
         }).catch(e => {
             dispatch(fetchTransactionError(e.message))
+        })
+    }
+}
+
+export const searchUsers = name => {
+    return (dispatch) => {
+        dispatch(searchUserRequest(true))
+        axios.get(`/users/${name}/find`).then(res => {
+            dispatch(searchUserSuccess(res.data))
+        }).catch(e => {
+            dispatch(searchUserError(e.message))
         })
     }
 }

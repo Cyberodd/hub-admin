@@ -20,3 +20,24 @@ export const searchError = error => {
         payload: error
     }
 }
+
+export const searchUserRequest = bool => {
+    return {
+        type: actions.SEARCH_USER_REQUEST,
+        payload: bool
+    }
+}
+
+export const searchUserSuccess = users => {
+    return {
+        type: actions.SEARCH_USER_SUCCESS,
+        payload: users
+    }
+}
+
+export const searchUserError = error => {
+    return {
+        type: actions.SEARCH_USER_ERROR,
+        payload: error
+    }
+}
