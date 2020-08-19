@@ -15,6 +15,8 @@ import {
 import {
     searchError, searchRequest, searchSuccess, searchUserError, searchUserRequest, searchUserSuccess
 } from "../redux/searches/searchAction"
+import {reportError, reportRequest, reportSuccess} from "../redux/reports/reportActions"
+import {produceError, produceRequest, produceSuccess} from "../redux/milk-produce/produceActions"
 
 export const signIn = (user, history) => {
     return (dispatch) => {
@@ -67,6 +69,28 @@ export const searchUsers = name => {
             dispatch(searchUserSuccess(res.data))
         }).catch(e => {
             dispatch(searchUserError(e.message))
+        })
+    }
+}
+
+export const fetchReports = day => {
+    return (dispatch) => {
+        dispatch(reportRequest(true))
+        axios.get(`/reports/${day}`).then(res => {
+            dispatch(reportSuccess(res.data))
+        }).catch(e => {
+            dispatch(reportError(e.message))
+        })
+    }
+}
+
+export const fetchMilkProduce = day => {
+    return (dispatch) => {
+        dispatch(produceRequest(true))
+        axios.get(`/milk-produce/${day}`).then(res => {
+            dispatch(produceSuccess(res.data))
+        }).catch(e => {
+            dispatch(produceError(e.message))
         })
     }
 }

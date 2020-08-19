@@ -6,6 +6,7 @@ import Report from "../components/Report"
 import Transactions from "../components/Sales"
 import {Redirect} from "react-router-dom"
 import {connect} from 'react-redux'
+import MilkProduce from "../components/MilkProduce"
 
 function Content({match:{params}, authenticated}) {
 
@@ -14,10 +15,10 @@ function Content({match:{params}, authenticated}) {
     const renderComponents = (() => {
         switch (params.item){
             case 'dashboard': return <Home/>
-            // case 'farms': return <Farm/>
+            case 'milk-produce': return <MilkProduce/>
             case 'animals': return <Animal/>
             case 'users': return <User/>
-            case 'transactions': return <Transactions/>
+            case 'sales': return <Transactions/>
             case 'reports': return <Report/>
             default: return <Home/>
         }

@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import CategoryDialog from "./CategoryDialog"
 import AdminDialog from "./AdminDialog"
 import AddDialog from "./AddDialog"
+import {Link} from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -15,11 +16,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function Home({categoryData, adminData, userData, animalData, salesData}) {
+function Home({categoryData, adminData, userData, animalData, salesData, reportData}) {
 
     const homeItems = [
         {name: 'Animals', count: animalData.animals.length, icon: <PetsTwoTone/>, appearance: 'text-success'},
-        {name: 'Reports', count: 10000, icon: <AssessmentOutlined/>, appearance: 'text-warning'},
+        {name: 'Reports', count: reportData.reports.length, icon: <AssessmentOutlined/>, appearance: 'text-warning'},
         {name: 'Sales', count: salesData.sales.length, icon: <MonetizationOnOutlined/>, appearance: 'text-primary'},
         {name: 'Users', count: userData.users.length, icon: <PeopleAltOutlined/>, appearance: 'text-danger'},
     ]
@@ -75,7 +76,7 @@ function Home({categoryData, adminData, userData, animalData, salesData}) {
             <div className="row custom-home">
                 {homeItems.map(item => (
                     <div className="col-sm-6 col-md-6 col-lg-3 p-2" key={item.name}>
-                        <div className="card card-common">
+                        <Link to={`/${item.name.toLowerCase()}`} className="card card-common">
                             <div className="card-body">
                                 <div className="d-flex justify-content-between">
                                     <ListItemIcon className={item.appearance}>{item.icon}</ListItemIcon>
@@ -85,7 +86,7 @@ function Home({categoryData, adminData, userData, animalData, salesData}) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     </div>
                 ))}
                 <div className={classes.content}>
@@ -166,7 +167,8 @@ const mapStateToProps = state => ({
     adminData: state.adminData,
     userData: state.userData,
     animalData: state.animalData,
-    salesData: state.salesData
+    salesData: state.salesData,
+    reportData: state.reportData
 })
 
 export default connect(mapStateToProps)(Home)

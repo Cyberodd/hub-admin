@@ -6,20 +6,20 @@ import {
     AppBar, CssBaseline, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography
 } from "material-ui-core"
 import {
-    MonetizationOnOutlined, AssessmentOutlined, PeopleAltOutlined, PetsOutlined, DashboardOutlined,
+    MonetizationOnOutlined, AssessmentOutlined, PeopleAltOutlined, PetsOutlined, DashboardOutlined, OpacityOutlined,
 } from '@material-ui/icons'
 import logo from '../assets/dairy-icon.png'
 import Content from "./content"
 import SignOutDialog from "../components/SignOutDialog"
 import {connect} from 'react-redux'
-import {fetchAdmins, fetchAnimals, fetchCategories, fetchTransactions, fetchUsers} from "../api"
+import {fetchAdmins, fetchAnimals, fetchCategories, fetchReports, fetchTransactions, fetchUsers} from "../api"
 
 const drawerItems = [
     {name: 'Dashboard', icon: <DashboardOutlined/>, path: 'dashboard'},
-    // {name: 'Farms', icon: <CategoryOutlined/>, path: 'farms'},
     {name: 'Animals', icon: <PetsOutlined/>, path: 'animals'},
+    {name: 'Milk Produce', icon: <OpacityOutlined/>, path: 'milk-produce'},
     {name: 'Users', icon: <PeopleAltOutlined/>, path: 'users'},
-    {name: 'Transactions', icon: <MonetizationOnOutlined/>, path: 'transactions'},
+    {name: 'Transactions', icon: <MonetizationOnOutlined/>, path: 'sales'},
     {name: 'Reports', icon: <AssessmentOutlined/>, path: 'reports'},
 ]
 
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-function Dashboard({fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetchTransactions}) {
+function Dashboard({fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetchTransactions, fetchReports}) {
 
     const classes = useStyles()
 
@@ -60,7 +60,8 @@ function Dashboard({fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetc
         fetchUsers()
         fetchAnimals()
         fetchTransactions(dayJs(new Date().toISOString()).format('D MMM YYYY'))
-    }, [fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetchTransactions])
+        fetchReports(dayJs(new Date().toISOString()).format('D MMM YYYY'))
+    }, [fetchCategories, fetchAdmins, fetchUsers, fetchAnimals, fetchTransactions, fetchReports])
 
     return (
         <div className={classes.root}>
@@ -108,7 +109,8 @@ const mapActionsToProps = dispatch => ({
     fetchAdmins: () => dispatch(fetchAdmins()),
     fetchUsers: () => dispatch(fetchUsers()),
     fetchAnimals: () => dispatch(fetchAnimals()),
-    fetchTransactions: (day) => dispatch(fetchTransactions(day))
+    fetchTransactions: (day) => dispatch(fetchTransactions(day)),
+    fetchReports: (day) => dispatch(fetchReports(day))
 })
 
 export default connect(mapStateToProps, mapActionsToProps)(Dashboard)
