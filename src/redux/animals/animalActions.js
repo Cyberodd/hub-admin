@@ -21,23 +21,9 @@ export const fetchAnimalsError = error => {
     }
 }
 
-export const searchRequest = bool => {
+export const fetchAnimal = animalId => {
     return {
-        type: actions.SEARCH_REQUEST,
-        payload: bool
-    }
-}
-
-export const searchSuccess = animals => {
-    return {
-        type: actions.SEARCH_SUCCESS,
-        payload: animals
-    }
-}
-
-export const searchError = error => {
-    return {
-        type: actions.SEARCH_ERROR,
-        payload: error
+        type: actions.FETCH_ANIMAL,
+        payload: animalId
     }
 }

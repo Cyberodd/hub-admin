@@ -7,6 +7,7 @@ import animalReducer from "./animals/animalReducer"
 import categoryReducer from "./categories/categoryReducer"
 import adminReducer from "./users/adminReducer"
 import userReducer from "./users/userReducer"
+import searchReducer from "./searches/searchReducer"
 
 const initialState = {}
 const middleware = [thunk]
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     animalData: animalReducer,
     categoryData: categoryReducer,
     adminData: adminReducer,
-    userData: userReducer
+    userData: userReducer,
+    searchData: searchReducer
 })
 
 const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))

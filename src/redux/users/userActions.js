@@ -20,3 +20,10 @@ export const fetchUsersError = error => {
         payload: error
     }
 }
+
+export const fetchOwner = userId => {
+    return {
+        type: actions.FETCH_OWNER,
+        payload: userId
+    }
+}

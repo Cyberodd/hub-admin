@@ -3,6 +3,8 @@ import {makeStyles} from "@material-ui/core/styles"
 import {Button, TextField, Typography} from "material-ui-core"
 import {connect} from 'react-redux'
 import dayJs from 'dayjs'
+import {fetchAnimalFromState} from "../api"
+import AnimalDialog from "./AnimalDialog"
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -15,16 +17,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-function Sales({salesData: {sales, loading, error}}) {
+function Sales({salesData: {sales, loading, error}, animalData, fetchAnimalFromState}) {
 
     const [date, setDate] = useState('')
-    const [sale, setSale] = useState(null)
+    const [saleObj, setSaleObj] = useState(null)
     const classes = useStyles()
 
     const findTransactions = () => {
         if (date !== '') {
             console.log('DATE', dayJs(date).format('D MMM YYYY'))
         }
+    }
+
+    const handleView = (e, sale) => {
+        setSaleObj(sale)
+        fetchAnimalFromState(sale['animalId'])
     }
 
     return (
@@ -66,7 +73,7 @@ function Sales({salesData: {sales, loading, error}}) {
                                     <span>Kgs</span>}</td>
                                 <td>
                                     <Button variant='contained' color='primary' size='small'
-                                            onClick={() => setSale(sale)}>
+                                            onClick={e => handleView(e, sale)}>
                                         View
                                     </Button>
                                 </td>
@@ -79,25 +86,25 @@ function Sales({salesData: {sales, loading, error}}) {
                     <h5>Transaction Info</h5>
                     <div className="card">
                         <div className="card-body">
-                            {sale !== null ? (
+                            {saleObj !== null ? (
                                 <div>
-                                    <Typography variant='body2'><b className='mr-2'>TransactionID:</b> {sale["transId"]}
+                                    <Typography variant='body2'><b className='mr-2'>TransactionID:</b> {saleObj["transId"]}
                                     </Typography>
                                     <br/>
-                                    <Typography variant='body2'><b className='mr-2'>Type:</b> {sale.type}</Typography>
+                                    <Typography variant='body2'><b className='mr-2'>Type:</b> {saleObj.type}</Typography>
                                     <br/>
                                     <Typography variant='body2'><b className='mr-2'>Quantity:</b>
-                                        {sale["quantity"]} {sale["type"] === 'Milk Sale' ? <span>litres</span> :
+                                        {saleObj["quantity"]} {saleObj["type"] === 'Milk Sale' ? <span>litres</span> :
                                             <span>Kgs</span>}
                                     </Typography>
                                     <br/>
-                                    <Typography variant='body2'><b className='mr-2'>Date:</b> {sale["time"]}
+                                    <Typography variant='body2'><b className='mr-2'>Date:</b> {saleObj["time"]}
                                     </Typography>
                                     <br/>
-                                    <Typography variant='body2'><b className='mr-2'>Amount:</b> {sale["cash"]}
+                                    <Typography variant='body2'><b className='mr-2'>Amount:</b> {saleObj["cash"]}
                                     </Typography>
                                     <br/>
-                                    <Button variant='contained' color='primary' size='small'>View Animal</Button>
+                                    <AnimalDialog animal={animalData.animal}/>
                                 </div>
                             ) : (
                                 <p className='text-center'>No Sale Selected</p>
@@ -111,9 +118,12 @@ function Sales({salesData: {sales, loading, error}}) {
 }
 
 const mapStateToProps = state => ({
-    salesData: state.salesData
+    salesData: state.salesData,
+    animalData: state.animalData
 })
 
-const mapActionsToProps = dispatch => ({})
+const mapActionsToProps = dispatch => ({
+    fetchAnimalFromState: (animalId) => dispatch(fetchAnimalFromState(animalId))
+})
 
 export default connect(mapStateToProps, mapActionsToProps)(Sales)

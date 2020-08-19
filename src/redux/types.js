@@ -41,4 +41,7 @@ export const SEARCH_REQUEST = 'SEARCH_REQUEST'
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS'
 export const SEARCH_ERROR = 'SEARCH_ERROR'
 
+export const FETCH_ANIMAL = 'FETCH_ANIMAL'
+export const FETCH_OWNER = 'FETCH_OWNER'
+
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'

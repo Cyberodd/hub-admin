@@ -1,14 +1,9 @@
 import axios from 'axios'
 import {signInError, signInRequest, signInSuccess, signOut} from "../redux/auth/authActions"
-import {fetchUsersError, fetchUsersRequest, fetchUsersSuccess} from '../redux/users/userActions'
+import {fetchOwner, fetchUsersError, fetchUsersRequest, fetchUsersSuccess} from '../redux/users/userActions'
 import {CLEAR_ERRORS} from "../redux/types"
 import {fetchTransactionError, fetchTransactionRequest, fetchTransactionSuccess} from "../redux/sales/salesActions"
-import {
-    fetchAnimalsError,
-    fetchAnimalsRequest,
-    fetchAnimalsSuccess, searchError,
-    searchRequest, searchSuccess
-} from "../redux/animals/animalActions"
+import {fetchAnimal, fetchAnimalsError, fetchAnimalsRequest, fetchAnimalsSuccess} from "../redux/animals/animalActions"
 import {
     addCategoryError, addCategoryRequest, addCategorySuccess, deleteCategory, fetchCategoriesError,
     fetchCategoriesRequest, fetchCategoriesSuccess
@@ -17,6 +12,7 @@ import {
     addAdminError, addAdminRequest, addAdminSuccess, deleteAdmin, fetchAdminsError, fetchAdminsRequest,
     fetchAdminsSuccess, updateAdminError, updateAdminRequest, updateAdminSuccess
 } from "../redux/users/adminActions"
+import {searchError, searchRequest, searchSuccess} from "../redux/searches/searchAction"
 
 export const signIn = (user, history) => {
     return (dispatch) => {
@@ -156,6 +152,18 @@ export const searchAnimal = name => {
         }).catch(e => {
             dispatch(searchError(e.message))
         })
+    }
+}
+
+export const fetchAnimalFromState = animalId => {
+    return (dispatch) => {
+        dispatch(fetchAnimal(animalId))
+    }
+}
+
+export const fetchAnimalOwner = userId => {
+    return (dispatch) => {
+        dispatch(fetchOwner(userId))
     }
 }
 
